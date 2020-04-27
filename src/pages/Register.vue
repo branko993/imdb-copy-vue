@@ -70,6 +70,8 @@
 </template>
 
 <script>
+import { AUTH_ACTIONS } from "../store/actions/actions";
+
 export default {
   name: "Register",
   data() {
@@ -114,7 +116,7 @@ export default {
     registerUser() {
       if (this.checkForm()) {
         this.$store
-          .dispatch("REGISTER_REQUEST", this.user)
+          .dispatch(AUTH_ACTIONS.REGISTER_REQUEST, this.user)
           .then(() => {
             this.registerMessage =
               "User with email:" + this.user.email + " registered successfully";
