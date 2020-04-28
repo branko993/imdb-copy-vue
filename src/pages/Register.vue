@@ -92,7 +92,6 @@ export default {
         email: null,
         password: null
       },
-      repeatPassword: null,
       registerMessage: "",
       registerError: false
     };
