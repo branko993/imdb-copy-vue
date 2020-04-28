@@ -3,9 +3,10 @@ import Register from "./pages/Register";
 import HelloWorld from "./components/HelloWorld";
 import PageNotFound from "./pages/PageNotFound"
 import store from "./store/store";
+import { AUTH_GETTERS } from "./store/getters/getters";
 
 const ifNotAuthenticated = (to, from, next) => {
-  if (!store.getters.isAuthenticated) {
+  if (!store.getters[AUTH_GETTERS.isAuthenticated]) {
     next();
     return;
   }
@@ -13,7 +14,7 @@ const ifNotAuthenticated = (to, from, next) => {
 };
 
 const ifAuthenticated = (to, from, next) => {
-  if (store.getters.isAuthenticated) {
+  if (store.getters[AUTH_GETTERS.isAuthenticated]) {
     next();
     return;
   }

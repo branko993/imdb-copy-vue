@@ -1,24 +1,17 @@
 <template>
   <div class="hello">
-    <button v-on:click="logOut($event)">logOut</button>
+    <button v-on:click.stop.prevent="logOut">logOut</button>
   </div>
 </template>
 
 <script>
+import { AUTH_ACTIONS } from "../store/actions/actions";
 
 export default {
   name: "HelloWorld",
-  computed: {
-    count() {
-      return this.$store.state.count;
-    }
-  },
   methods: {
-    logOut(event){
-      event.preventDefault();
-      this.$store.dispatch("LOG_OUT").then(() => {
-        this.$router.push("/login");
-      });
+    logOut() {
+      this.$store.dispatch(AUTH_ACTIONS.LOG_OUT, this.$router);
     }
   }
 };

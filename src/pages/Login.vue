@@ -53,6 +53,8 @@
 
 
 <script>
+import { AUTH_ACTIONS } from "../store/actions/actions";
+
 export default {
   name: "Login",
   data() {
@@ -80,7 +82,7 @@ export default {
     login() {
       if (this.checkForm()) {
         this.$store
-          .dispatch("LOGIN_REQUEST", this.user)
+          .dispatch(AUTH_ACTIONS.LOGIN_REQUEST, this.user)
           .then(() => {
             this.$router.push("/");
           })
