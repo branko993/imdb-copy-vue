@@ -12,23 +12,28 @@
               <span class="input-group-text" id="basic-addon1">@</span>
             </div>
             <input
+              v-validate="'email|required|max:255'"
+              data-vv-as="email"
+              name="email"
               class="form-control mr-sm-2"
               v-model="user.email"
-              type="email"
+              type="text"
               placeholder="Enter email"
-              required
             />
           </div>
+          <small v-show="errors.has('email')" class="text-danger">{{ errors.first('email') }}</small>
         </div>
         <div class="form-group">
           <label for="userEmail">Password</label>
           <input
             class="form-control mr-sm-2"
+            v-validate="'required'"
             v-model="user.password"
             type="password"
             placeholder="Enter password"
-            required
+            name="password"
           />
+          <small v-show="errors.has('password')" class="text-danger">{{ errors.first('password') }}</small>
         </div>
         <div class="text-center">
           <span
@@ -68,31 +73,25 @@ export default {
     };
   },
   methods: {
-    checkForm() {
-      if (String(this.user.email).length > 255) {
-        this.loginError = true;
-        this.loginMessage = "Email must be less than 255 characters";
-        return false;
-      }
-
-      this.loginMessage = "";
-      this.loginError = false;
-      return true;
-    },
     login() {
-      if (this.checkForm()) {
-        this.$store
-          .dispatch(AUTH_ACTIONS.LOGIN_REQUEST, this.user)
-          .then(() => {
-            this.$router.push("/");
-          })
-          .catch(err => {
-            let errorMessage =
-              "Error: " + err.response.statusText + " " + err.response.status;
-            this.loginMessage = errorMessage;
-            this.loginError = true;
-          });
-      }
+      this.$validator.validate().then(valid => {
+        if (valid) {
+          this.$store
+            .dispatch(AUTH_ACTIONS.LOGIN_REQUEST, this.user)
+            .then(() => {
+              this.$router.push("/");
+            })
+            .catch(err => {
+              let errorMessage =
+                "Error: " + err.response.statusText + " " + err.response.status;
+              this.loginMessage = errorMessage;
+              this.loginError = true;
+            });
+        } else {
+          this.loginMessage = "";
+          this.loginError = false;
+        }
+      });
     }
   }
 };
