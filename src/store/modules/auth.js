@@ -1,7 +1,7 @@
 import { AUTH_ACTIONS } from "../actions/actions";
 import { AUTH_GETTERS } from "../getters/getters";
 import { AUTH_MUTATIONS } from "../mutations/mutations";
-import ApiService from "../../services/api.service";
+import AuthService from "../../services/auth.service";
 
 const auth = {
   state: {
@@ -32,45 +32,31 @@ const auth = {
     [AUTH_ACTIONS.LOGIN_REQUEST]: (context, user) => {
       context.commit(AUTH_MUTATIONS.AUTH_REQUEST);
 
-      return new Promise((resolve, reject) => {
-        ApiService.post("auth/login", user)
-          .then((resp) => {
-            const access_token = resp.data.access_token;
-            sessionStorage.setItem("access_token", access_token);
-            // axios.defaults.headers.common["Authorization"] =
-            //   "Bearer " + access_token;
-            ApiService.setAuthHeader(access_token);
-            context.commit(AUTH_MUTATIONS.AUTH_SUCCESS, access_token);
-            resolve(resp);
-          })
-          .catch((err) => {
-            context.commit(AUTH_MUTATIONS.AUTH_ERROR, err);
-            sessionStorage.removeItem("access_token");
-            reject(err);
-          });
-      });
+      return AuthService.login(user)
+        .then((resp) => {
+          context.commit(AUTH_MUTATIONS.AUTH_SUCCESS, resp.data.access_token);
+          return Promise.resolve(resp);
+        })
+        .catch((err) => {
+          context.commit(AUTH_MUTATIONS.AUTH_ERROR, err);
+          return Promise.reject(err);
+        });
     },
     [AUTH_ACTIONS.LOG_OUT]: (context, router) => {
       context.commit(AUTH_MUTATIONS.AUTH_LOGOUT);
-      sessionStorage.removeItem("access_token");
-      ApiService.removeHeader("Authorization");
 
-      router.push("/login");
-
-      // delete axios.defaults.headers.common["Authorization"];
+      AuthService.logout(router);
     },
     [AUTH_ACTIONS.REGISTER_REQUEST]: (context, user) => {
-      return new Promise((resolve, reject) => {
-        ApiService.post("auth/register", user)
-          .then((resp) => {
-            resolve(resp);
-          })
-          .catch((err) => {
-            context.commit(AUTH_MUTATIONS.AUTH_ERROR, err);
-            sessionStorage.removeItem("access_token");
-            reject(err);
-          });
-      });
+      return AuthService.register(user)
+        .then((resp) => {
+          return Promise.resolve(resp);
+        })
+        .catch((err) => {
+          context.commit(AUTH_MUTATIONS.AUTH_ERROR, err);
+          sessionStorage.removeItem("access_token");
+          return Promise.reject(err);
+        });
     },
   },
 };

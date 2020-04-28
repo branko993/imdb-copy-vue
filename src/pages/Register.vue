@@ -9,47 +9,58 @@
           <label for="userName">Name</label>
           <input
             type="text"
+            v-validate="'required|max:255'"
             class="form-control"
             id="userName"
+            name="username"
             placeholder="Enter name"
             v-model="user.name"
-            required
           />
+          <small v-show="errors.has('username')" class="text-danger">{{ errors.first('username') }}</small>
         </div>
         <div class="form-group">
           <label for="userEmail">Email</label>
           <input
-            required
-            type="email"
+            v-validate="'email|required|max:255'"
+            data-vv-as="email"
+            type="text"
+            name="email"
             class="form-control"
             id="userEmail"
             placeholder="Enter email"
             v-model="user.email"
           />
+          <small v-show="errors.has('email')" class="text-danger">{{ errors.first('email') }}</small>
         </div>
         <div class="form-group">
           <label for="userPassword">Password</label>
           <input
-            required
+            v-validate="'required|min:6'"
             name="password"
             type="password"
             class="form-control"
             id="userPassword"
             placeholder="Enter password"
             v-model="user.password"
+            ref="password"
           />
+          <small v-show="errors.has('password')" class="text-danger">{{ errors.first('password') }}</small>
         </div>
         <div class="form-group">
           <label for="userRepeatPassword">Repeat password</label>
           <input
-            required
+            v-validate="'required|confirmed:password'"
+            data-vv-as="password"
             class="form-control"
             name="password_confirmation"
             type="password"
             id="userRepeatPassword"
             placeholder="Repeat password"
-            v-model="repeatPassword"
           />
+          <small
+            v-show="errors.has('password_confirmation')"
+            class="text-danger"
+          >{{ errors.first('password_confirmation') }}</small>
         </div>
         <div class="text-center">
           <span
@@ -81,53 +92,41 @@ export default {
         email: null,
         password: null
       },
-      repeatPassword: null,
       registerMessage: "",
       registerError: false
     };
   },
   methods: {
     checkForm() {
-      if (this.user.password != this.repeatPassword) {
-        this.registerError = true;
-        this.registerMessage = "Password must match repeated password";
-        return false;
-      }
-      if (String(this.user.password).length < 6) {
-        this.registerError = true;
-        this.registerMessage = "Password must contain at least 6 characters";
-        return false;
-      }
       if (String(this.user.name).length > 255) {
         this.registerError = true;
         this.registerMessage = "Name must be less than 255 characters";
         return false;
       }
-      if (String(this.user.email).length > 255) {
-        this.registerError = true;
-        this.registerMessage = "Email must be less than 255 characters";
-        return false;
-      }
-
-      this.registerMessage = "";
-      this.registerError = false;
-      return true;
     },
     registerUser() {
-      if (this.checkForm()) {
-        this.$store
-          .dispatch(AUTH_ACTIONS.REGISTER_REQUEST, this.user)
-          .then(() => {
-            this.registerMessage =
-              "User with email:" + this.user.email + " registered successfully";
-          })
-          .catch(err => {
-            let errorMessage =
-              "Error: " + err.response.statusText + " " + err.response.status;
-            this.registerMessage = errorMessage;
-            this.registerError = true;
-          });
-      }
+      this.$validator.validate().then(valid => {
+        if (valid) {
+          this.$store
+            .dispatch(AUTH_ACTIONS.REGISTER_REQUEST, this.user)
+            .then(() => {
+              this.registerError = false;
+              this.registerMessage =
+                "User with email:" +
+                this.user.email +
+                " registered successfully";
+            })
+            .catch(err => {
+              let errorMessage =
+                "Error: " + err.response.statusText + " " + err.response.status;
+              this.registerMessage = errorMessage;
+              this.registerError = true;
+            });
+        } else {
+          this.registerMessage = "";
+          this.registerError = false;
+        }
+      });
     }
   }
 };
