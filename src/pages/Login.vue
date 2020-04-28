@@ -38,8 +38,7 @@
         <div class="text-center">
           <span
             v-show="!!loginMessage"
-            class="badge"
-            :class="{'badge-danger': loginError, 'badge-success': !loginError}"
+            class="badge badge-danger"
           >{{ loginMessage }}</span>
         </div>
         <div class="text-center">
@@ -74,7 +73,6 @@ export default {
         password: null
       },
       loginMessage: "",
-      loginError: false
     };
   },
   computed: {
@@ -93,7 +91,6 @@ export default {
           let errorMessage =
             "Error: " + err.response.statusText + " " + err.response.status;
           this.loginMessage = errorMessage;
-          this.loginError = true;
         });
     }
   }
