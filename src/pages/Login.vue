@@ -49,7 +49,12 @@
           <router-link to="/register" class="nav-link">Don't have account? Register here.</router-link>
         </div>
         <div class="text-center">
-          <input class="btn btn-info btn-lg" type="submit" value="Login" />
+          <input
+            class="btn btn-info btn-lg"
+            type="submit"
+            value="Login"
+            :disabled="errors.any() || isFormUntouched"
+          />
         </div>
       </form>
     </div>
@@ -72,26 +77,24 @@ export default {
       loginError: false
     };
   },
+  computed: {
+    isFormUntouched() {
+      return Object.keys(this.fields).some(key => this.fields[key].untouched);
+    }
+  },
   methods: {
     login() {
-      this.$validator.validate().then(valid => {
-        if (valid) {
-          this.$store
-            .dispatch(AUTH_ACTIONS.LOGIN_REQUEST, this.user)
-            .then(() => {
-              this.$router.push("/");
-            })
-            .catch(err => {
-              let errorMessage =
-                "Error: " + err.response.statusText + " " + err.response.status;
-              this.loginMessage = errorMessage;
-              this.loginError = true;
-            });
-        } else {
-          this.loginMessage = "";
-          this.loginError = false;
-        }
-      });
+      this.$store
+        .dispatch(AUTH_ACTIONS.LOGIN_REQUEST, this.user)
+        .then(() => {
+          this.$router.push("/");
+        })
+        .catch(err => {
+          let errorMessage =
+            "Error: " + err.response.statusText + " " + err.response.status;
+          this.loginMessage = errorMessage;
+          this.loginError = true;
+        });
     }
   }
 };

@@ -11,7 +11,9 @@ export default {
   name: "HelloWorld",
   methods: {
     logOut() {
-      this.$store.dispatch(AUTH_ACTIONS.LOG_OUT, this.$router);
+      this.$store
+        .dispatch(AUTH_ACTIONS.LOG_OUT, this.$router)
+        .then(this.$router.push("/login"));
     }
   }
 };
