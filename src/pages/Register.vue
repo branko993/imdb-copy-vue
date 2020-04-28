@@ -73,7 +73,12 @@
           <router-link to="/login" class="nav-link">Go back to login?</router-link>
         </div>
         <div class="text-center">
-          <input class="btn btn-info btn-lg" type="submit" value="Submit" />
+          <input
+            class="btn btn-info btn-lg"
+            type="submit"
+            value="Submit"
+            :disabled="errors.any() || isFormUntouched"
+          />
         </div>
       </form>
     </div>
@@ -96,6 +101,11 @@ export default {
       registerError: false
     };
   },
+  computed: {
+    isFormUntouched() {
+      return Object.keys(this.fields).some(key => this.fields[key].untouched);
+    }
+  },
   methods: {
     checkForm() {
       if (String(this.user.name).length > 255) {
@@ -105,28 +115,19 @@ export default {
       }
     },
     registerUser() {
-      this.$validator.validate().then(valid => {
-        if (valid) {
-          this.$store
-            .dispatch(AUTH_ACTIONS.REGISTER_REQUEST, this.user)
-            .then(() => {
-              this.registerError = false;
-              this.registerMessage =
-                "User with email:" +
-                this.user.email +
-                " registered successfully";
-            })
-            .catch(err => {
-              let errorMessage =
-                "Error: " + err.response.statusText + " " + err.response.status;
-              this.registerMessage = errorMessage;
-              this.registerError = true;
-            });
-        } else {
-          this.registerMessage = "";
+      this.$store
+        .dispatch(AUTH_ACTIONS.REGISTER_REQUEST, this.user)
+        .then(() => {
           this.registerError = false;
-        }
-      });
+          this.registerMessage =
+            "User with email:" + this.user.email + " registered successfully";
+        })
+        .catch(err => {
+          let errorMessage =
+            "Error: " + err.response.statusText + " " + err.response.status;
+          this.registerMessage = errorMessage;
+          this.registerError = true;
+        });
     }
   }
 };

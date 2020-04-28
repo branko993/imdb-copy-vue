@@ -35,28 +35,24 @@ const auth = {
       return AuthService.login(user)
         .then((resp) => {
           context.commit(AUTH_MUTATIONS.AUTH_SUCCESS, resp.data.access_token);
-          return Promise.resolve(resp);
+          return resp;
         })
         .catch((err) => {
           context.commit(AUTH_MUTATIONS.AUTH_ERROR, err);
           return Promise.reject(err);
         });
     },
-    [AUTH_ACTIONS.LOG_OUT]: (context, router) => {
+    [AUTH_ACTIONS.LOG_OUT]: (context) => {
       context.commit(AUTH_MUTATIONS.AUTH_LOGOUT);
 
-      AuthService.logout(router);
+      AuthService.logout();
     },
     [AUTH_ACTIONS.REGISTER_REQUEST]: (context, user) => {
-      return AuthService.register(user)
-        .then((resp) => {
-          return Promise.resolve(resp);
-        })
-        .catch((err) => {
-          context.commit(AUTH_MUTATIONS.AUTH_ERROR, err);
-          sessionStorage.removeItem("access_token");
-          return Promise.reject(err);
-        });
+      return AuthService.register(user).catch((err) => {
+        context.commit(AUTH_MUTATIONS.AUTH_ERROR, err);
+        sessionStorage.removeItem("access_token");
+        return Promise.reject(err);
+      });
     },
   },
 };

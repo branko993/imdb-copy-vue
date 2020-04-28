@@ -12,7 +12,7 @@ const AuthService = {
         const access_token = resp.data.access_token;
         sessionStorage.setItem("access_token", access_token);
         ApiService.setAuthHeader(access_token);
-        return Promise.resolve(resp);
+        return resp;
       })
       .catch((err) => {
         sessionStorage.removeItem("access_token");
@@ -24,11 +24,9 @@ const AuthService = {
     return ApiService.post(authUrl.register, user);
   },
 
-  logout(router) {
+  logout() {
     sessionStorage.removeItem("access_token");
     ApiService.removeHeader("Authorization");
-
-    router.push("/login");
   },
 };
 
