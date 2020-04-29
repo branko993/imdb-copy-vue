@@ -1,5 +1,6 @@
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import MovieLayout from "./layout/MovieLayout";
 import Movies from "./pages/Movies";
 import Movie from "./pages/Movie";
 import PageNotFound from "./pages/PageNotFound";
@@ -29,11 +30,17 @@ export default {
   routes: [
     {
       path: "/",
-      component: Movies,
-    },
-    {
-      path: "/movie/:id",
-      component: Movie,
+      component: MovieLayout,
+      children: [
+        {
+          path: "movie/:id",
+          component: Movie,
+        },
+        {
+          path: "/",
+          component: Movies,
+        }
+      ]
     },
     {
       path: "/login",

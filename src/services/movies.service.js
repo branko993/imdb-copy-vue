@@ -2,7 +2,7 @@ import ApiService from "./api.service";
 
 const moviesUrl = {
   getAll: "movies/all",
-  getCurrent: "movies/",
+  getCurrent: "movies/movie/",
 };
 
 const MoviesService = {

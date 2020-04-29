@@ -3,11 +3,11 @@
     <b-card no-body class="overflow-hidden offset-md-1">
       <b-row no-gutters>
         <b-col md="4">
-          <b-card-img :src="getCurrentMovie.image_url" alt="Image" class="rounded-0"></b-card-img>
+          <b-card-img :src="currentMovie.image_url" alt="Image" class="rounded-0"></b-card-img>
         </b-col>
         <b-col md="8">
-          <b-card-body :title="getCurrentMovie.title">
-            <b-card-text>{{getCurrentMovie.description}}</b-card-text>
+          <b-card-body :title="currentMovie.title">
+            <b-card-text>{{currentMovie.description}}</b-card-text>
           </b-card-body>
         </b-col>
       </b-row>
@@ -33,7 +33,7 @@ export default {
     this.loadData();
   },
   computed: {
-    getCurrentMovie() {
+    currentMovie() {
       return this.$store.getters[MOVIES_GETTERS.getCurrentMovie];
     }
   }

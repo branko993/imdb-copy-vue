@@ -1,6 +1,6 @@
 <template>
   <div class="container" style="margin-top:15px">
-    <div class="row" v-for="movie in getAllMovies" :key="movie.id">
+    <div class="row" v-for="movie in movies" :key="movie.id">
       <b-card
         no-body
         class="overflow-hidden offset-md-1"
@@ -40,7 +40,7 @@ export default {
     this.loadData();
   },
   computed: {
-    getAllMovies() {
+    movies() {
       return this.$store.getters[MOVIES_GETTERS.getAllMovies];
     }
   }
