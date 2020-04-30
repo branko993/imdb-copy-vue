@@ -39,8 +39,8 @@ export default {
         {
           path: "/",
           component: Movies,
-        }
-      ]
+        },
+      ],
     },
     {
       path: "/login",
