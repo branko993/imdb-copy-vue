@@ -3,6 +3,9 @@ export const AUTH_GETTERS = {
   authStatus: "authStatus",
 };
 export const MOVIES_GETTERS = {
-  getAllMovies: "getAllMovies",
+  getMovies: "getMovies",
   getCurrentMovie: "getCurrentMovie",
+  getCurrentPage: "getCurrentPage",
+  getPerPage: "getPerPage",
+  getTotalRows: "getTotalRows",
 };

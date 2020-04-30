@@ -4,7 +4,7 @@
       <b-card
         no-body
         class="overflow-hidden offset-md-1"
-        style="max-width: 800px; margin-top:3px;cursor:pointer"
+        style="max-width: 800px; margin-top:3px;cursor:pointer;"
         @click="redirectToMovie(movie.id)"
       >
         <b-row no-gutters>
@@ -19,18 +19,32 @@
         </b-row>
       </b-card>
     </div>
+    <div class="container">
+      <b-pagination
+        class="offset-md-3"
+        :total-rows="totalRows"
+        :per-page="perPage"
+        aria-controls="my-table"
+        v-model="currentPage"
+        @input="getPage"
+      ></b-pagination>
+    </div>
   </div>
 </template>
 
 <script>
 import { MOVIES_ACTIONS } from "../store/actions/actions";
 import { MOVIES_GETTERS } from "../store/getters/getters";
+import { mapFields } from "vuex-map-fields";
 
 export default {
   name: "Movies",
   methods: {
     loadData() {
-      this.$store.dispatch(MOVIES_ACTIONS.FETCH_ALL_MOVIES);
+      this.$store.dispatch(MOVIES_ACTIONS.FETCH_CURRENT_PAGE, this.currentPage);
+    },
+    getPage(page) {
+      this.$store.dispatch(MOVIES_ACTIONS.FETCH_CURRENT_PAGE, page);
     },
     redirectToMovie(id) {
       this.$router.push(`/movie/${id}`);
@@ -40,8 +54,15 @@ export default {
     this.loadData();
   },
   computed: {
+    ...mapFields(["currentPage"]),
     movies() {
-      return this.$store.getters[MOVIES_GETTERS.getAllMovies];
+      return this.$store.getters[MOVIES_GETTERS.getMovies];
+    },
+    perPage() {
+      return this.$store.getters[MOVIES_GETTERS.getPerPage];
+    },
+    totalRows() {
+      return this.$store.getters[MOVIES_GETTERS.getTotalRows];
     }
   }
 };
