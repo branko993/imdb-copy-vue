@@ -36,6 +36,7 @@
 import { MOVIES_ACTIONS } from "../store/actions/actions";
 import { MOVIES_GETTERS } from "../store/getters/getters";
 import { mapFields } from "vuex-map-fields";
+import { mapGetters } from "vuex";
 
 export default {
   name: "Movies",
@@ -55,15 +56,11 @@ export default {
   },
   computed: {
     ...mapFields(["currentPage"]),
-    movies() {
-      return this.$store.getters[MOVIES_GETTERS.getMovies];
-    },
-    perPage() {
-      return this.$store.getters[MOVIES_GETTERS.getPerPage];
-    },
-    totalRows() {
-      return this.$store.getters[MOVIES_GETTERS.getTotalRows];
-    }
+    ...mapGetters({
+      movies: MOVIES_GETTERS.getMovies,
+      perPage: MOVIES_GETTERS.getPerPage,
+      totalRows: MOVIES_GETTERS.getTotalRows
+    })
   }
 };
 </script>

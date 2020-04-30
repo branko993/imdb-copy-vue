@@ -4,6 +4,7 @@ import { PER_PAGE } from "../shared/const";
 const moviesUrl = {
   getAll: "movies/all",
   getCurrent: "movies/movie/",
+  currentUrl: "movies/getPage?page=%page&size=%size",
 };
 
 const MoviesService = {
@@ -12,7 +13,9 @@ const MoviesService = {
   },
 
   getCurrentPage(page) {
-    let currentUrl = `movies/getPage?page=${page}&size=${PER_PAGE}`;
+    let currentUrl = moviesUrl.currentUrl
+      .replace("%page", page)
+      .replace("%size", PER_PAGE);
     return ApiService.get(currentUrl);
   },
 

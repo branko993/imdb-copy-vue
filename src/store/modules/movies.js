@@ -17,20 +17,13 @@ const movies = {
     perPage: 1,
   },
   mutations: {
-    [MOVIES_MUTATIONS.SET_MOVIES_LIST]: (state, moviesList) => {
-      state.moviesList = moviesList;
+    [MOVIES_MUTATIONS.SET_MOVIES_LIST]: (state, response) => {
+      state.moviesList = response.data;
+      state.totalRows = response.total;
+      state.perPage = response.per_page;
     },
     [MOVIES_MUTATIONS.SET_CURRENT_MOVIE]: (state, currentMovie) => {
       state.currentMovie = currentMovie;
-    },
-    [MOVIES_MUTATIONS.SET_CURRENT_PAGE]: (state, currentPage) => {
-      state.currentPage = currentPage;
-    },
-    [MOVIES_MUTATIONS.SET_TOTAL_ROWS]: (state, totalRows) => {
-      state.totalRows = totalRows;
-    },
-    [MOVIES_MUTATIONS.SET_PER_PAGE]: (state, perPage) => {
-      state.perPage = perPage;
     },
     updateField,
   },
@@ -45,9 +38,7 @@ const movies = {
   actions: {
     [MOVIES_ACTIONS.FETCH_CURRENT_PAGE]: (context, currentPage) => {
       return MoviesService.getCurrentPage(currentPage).then((resp) => {
-        context.commit(MOVIES_MUTATIONS.SET_MOVIES_LIST, resp.data.data);
-        context.commit(MOVIES_MUTATIONS.SET_TOTAL_ROWS, resp.data.total);
-        context.commit(MOVIES_MUTATIONS.SET_PER_PAGE, resp.data.per_page);
+        context.commit(MOVIES_MUTATIONS.SET_MOVIES_LIST, resp.data);
         return resp;
       });
     },
