@@ -5,6 +5,7 @@ const moviesUrl = {
   getAll: "movies/all",
   getCurrent: "movies/movie/",
   currentUrl: "movies/getPage?page=%page&size=%size",
+  createMovieurl: "/movies/create",
 };
 
 const MoviesService = {
@@ -21,6 +22,10 @@ const MoviesService = {
 
   getCurrentMovie(id) {
     return ApiService.get(`${moviesUrl.getCurrent}${id}`);
+  },
+
+  createNewMovie(movie) {
+    return ApiService.post(moviesUrl.createMovieurl, movie);
   },
 };
 

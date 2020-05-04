@@ -9,3 +9,6 @@ export const MOVIES_GETTERS = {
   getPerPage: "getPerPage",
   getTotalRows: "getTotalRows",
 };
+export const GENRE_GETTERS = {
+  getGenreList: "getGenreList",
+};

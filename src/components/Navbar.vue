@@ -1,14 +1,17 @@
 <template>
   <div>
     <nav class="navbar navbar-dark bg-dark">
-      <div class="navbar-brand">
+      <div class="nav-link">
         <router-link to="/" class="nav-link" style="color:white">PocketIMDB</router-link>
       </div>
       <div v-show="!isAuthenticated" class="form-inline my-2 my-lg-0 col-sm-2 offset-md-8">
         <router-link to="/login" class="nav-link" style="color:white">Login</router-link>/
         <router-link to="/register" class="nav-link" style="color:white">Register</router-link>
       </div>
-      <div v-show="isAuthenticated" class="col-sm-1 offset-md-9">
+      <div v-show="isAuthenticated" class=" form-inline">
+        <router-link to="/movies/create" class="nav-link" style="color:white">Create Movie</router-link>
+      </div>
+      <div v-show="isAuthenticated" class="col-sm-1 offset-md-8">
         <b-dropdown id="dropdown-1" variant="link" no-caret right>
           <template slot="button-content">
             <img class="img-fluid p-0" src="../assets/images/profile-avatar.png" style="width:85%" />

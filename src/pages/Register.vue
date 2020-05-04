@@ -107,13 +107,6 @@ export default {
     }
   },
   methods: {
-    checkForm() {
-      if (String(this.user.name).length > 255) {
-        this.registerError = true;
-        this.registerMessage = "Name must be less than 255 characters";
-        return false;
-      }
-    },
     registerUser() {
       this.$store
         .dispatch(AUTH_ACTIONS.REGISTER_REQUEST, this.user)

@@ -3,9 +3,9 @@ import Register from "./pages/Register";
 import MovieLayout from "./layout/MovieLayout";
 import Movies from "./pages/Movies";
 import Movie from "./pages/Movie";
+import CreateMovie from "./pages/CreateMovie";
 import PageNotFound from "./pages/PageNotFound";
 import store from "./store/store";
-import HelloWorld from "./components/HelloWorld";
 import { AUTH_GETTERS } from "./store/getters/getters";
 
 const ifNotAuthenticated = (to, from, next) => {
@@ -37,6 +37,11 @@ export default {
           component: Movie,
         },
         {
+          path: "/movies/create",
+          component: CreateMovie,
+          beforeEnter: ifAuthenticated,
+        },
+        {
           path: "/",
           component: Movies,
         },
@@ -51,11 +56,6 @@ export default {
       path: "/register",
       component: Register,
       beforeEnter: ifNotAuthenticated,
-    },
-    {
-      path: "/create",
-      component: HelloWorld,
-      beforeEnter: ifAuthenticated,
     },
     { path: "*", component: PageNotFound },
   ],
