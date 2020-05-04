@@ -87,6 +87,7 @@
 
 <script>
 import { AUTH_ACTIONS } from "../store/actions/actions";
+import { formMixin } from "../mixins/formMixin";
 
 export default {
   name: "Register",
@@ -101,11 +102,7 @@ export default {
       registerError: false
     };
   },
-  computed: {
-    isFormUntouched() {
-      return Object.keys(this.fields).some(key => this.fields[key].untouched);
-    }
-  },
+  mixins: [formMixin],
   methods: {
     registerUser() {
       this.$store

@@ -36,10 +36,7 @@
           <small v-show="errors.has('password')" class="text-danger">{{ errors.first('password') }}</small>
         </div>
         <div class="text-center">
-          <span
-            v-show="!!loginMessage"
-            class="badge badge-danger"
-          >{{ loginMessage }}</span>
+          <span v-show="!!loginMessage" class="badge badge-danger">{{ loginMessage }}</span>
         </div>
         <div class="text-center">
           <router-link to="#" class="nav-link" style="color:red">Forgot password?</router-link>
@@ -63,6 +60,7 @@
 
 <script>
 import { AUTH_ACTIONS } from "../store/actions/actions";
+import { formMixin } from "../mixins/formMixin";
 
 export default {
   name: "Login",
@@ -72,14 +70,10 @@ export default {
         email: null,
         password: null
       },
-      loginMessage: "",
+      loginMessage: ""
     };
   },
-  computed: {
-    isFormUntouched() {
-      return Object.keys(this.fields).some(key => this.fields[key].untouched);
-    }
-  },
+  mixins: [formMixin],
   methods: {
     login() {
       this.$store

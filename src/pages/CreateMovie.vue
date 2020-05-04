@@ -81,6 +81,7 @@ import { MOVIES_ACTIONS } from "../store/actions/actions";
 import { GENRE_ACTIONS } from "../store/actions/actions";
 import { GENRE_GETTERS } from "../store/getters/getters";
 import { mapGetters } from "vuex";
+import { formMixin } from "../mixins/formMixin";
 
 export default {
   data() {
@@ -97,13 +98,11 @@ export default {
   },
   name: "CreateMovie",
   computed: {
-    isFormUntouched() {
-      return Object.keys(this.fields).some(key => this.fields[key].untouched);
-    },
     ...mapGetters({
       genreList: GENRE_GETTERS.getGenreList
     })
   },
+  mixins: [formMixin],
   methods: {
     loadData() {
       this.$store.dispatch(GENRE_ACTIONS.FETCH_GENRE_LIST);
