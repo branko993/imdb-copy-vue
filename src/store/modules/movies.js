@@ -48,6 +48,9 @@ const movies = {
         return resp;
       });
     },
+    [MOVIES_ACTIONS.CREATE_NEW_MOVIE]: (context, movie) => {
+      return MoviesService.createNewMovie(movie);
+    },
   },
 };
 export default movies;

@@ -13,8 +13,8 @@ import ApiService from "./services/api.service";
 import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 
 var VueTruncate = require("vue-truncate-filter");
-Vue.use(VueTruncate);
 
+Vue.use(VueTruncate);
 Vue.use(VueAxios, axios);
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
