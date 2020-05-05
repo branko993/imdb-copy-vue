@@ -6,6 +6,8 @@ const moviesUrl = {
   getCurrent: "movies/movie/",
   currentUrl: "movies/getPage?page=%page&size=%size",
   createMovieurl: "/movies/create",
+  likeMovieUrl: "movies/%movie/like",
+  dislikeMovieUrl: "movies/%movie/dislike",
 };
 
 const MoviesService = {
@@ -26,6 +28,16 @@ const MoviesService = {
 
   createNewMovie(movie) {
     return ApiService.post(moviesUrl.createMovieurl, movie);
+  },
+
+  likeMovie(id) {
+    let likeMovieUrl = moviesUrl.likeMovieUrl.replace("%movie", id);
+    return ApiService.post(likeMovieUrl);
+  },
+
+  dislikeMovie(id) {
+    let dislikeMovieUrl = moviesUrl.dislikeMovieUrl.replace("%movie", id);
+    return ApiService.post(dislikeMovieUrl);
   },
 };
 
