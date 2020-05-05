@@ -15,28 +15,7 @@
           <b-col md="8">
             <b-card-body :title="movie.title">
               <b-card-text>{{movie.description | truncate(200)}}</b-card-text>
-              <div class="form-inline">
-                <span
-                  @click="likeMovie(movie.id)"
-                  :style="isAuthenticated? 'cursor:pointer' : 'pointer-events:none'"
-                >
-                  <font-awesome-icon
-                    :icon="movie.liked_by_user ? ['fa','thumbs-up'] : ['far','thumbs-up']"
-                  />
-                </span>
-                <strong style="margin-left:3px;">{{movie.total_likes}}</strong>
-              </div>
-              <div class="form-inline">
-                <span
-                  @click="dislikeMovie(movie.id)"
-                  :style="isAuthenticated? 'cursor:pointer' : 'pointer-events:none'"
-                >
-                  <font-awesome-icon
-                    :icon="movie.disliked_by_user ? ['fa','thumbs-down'] : ['far','thumbs-down']"
-                  />
-                </span>
-                <strong style="margin-left:3px;">{{movie.total_dislikes}}</strong>
-              </div>
+              <MovieReaction v-on:loadData="loadData" :movie="movie" />
             </b-card-body>
           </b-col>
         </b-row>
@@ -60,12 +39,13 @@ import { MOVIES_ACTIONS } from "../store/actions/actions";
 import { MOVIES_GETTERS } from "../store/getters/getters";
 import { mapFields } from "vuex-map-fields";
 import { mapGetters } from "vuex";
-import { likeMovieMixin } from "../mixins/likeMovieMixin";
-import { AUTH_GETTERS } from "../store/getters/getters";
+import MovieReaction from "../components/MovieReaction";
 
 export default {
   name: "Movies",
-  mixins: [likeMovieMixin],
+  components: {
+    MovieReaction
+  },
   methods: {
     loadData() {
       this.$store.dispatch(MOVIES_ACTIONS.FETCH_CURRENT_PAGE, this.currentPage);
@@ -86,7 +66,6 @@ export default {
       movies: MOVIES_GETTERS.getMovies,
       perPage: MOVIES_GETTERS.getPerPage,
       totalRows: MOVIES_GETTERS.getTotalRows,
-      isAuthenticated: AUTH_GETTERS.isAuthenticated
     })
   }
 };

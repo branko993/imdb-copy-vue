@@ -1,4 +1,7 @@
 import axios from "axios";
+import { AUTH_ACTIONS } from "../store/actions/actions";
+import { router } from "../main";
+import store from "../store/store";
 
 const ApiService = {
   init() {
@@ -27,6 +30,22 @@ const ApiService = {
 
   delete(resource) {
     return axios.delete(resource);
+  },
+
+  initInterceptor() {
+    axios.interceptors.response.use(
+      function(response) {
+        return response;
+      },
+      function(error) {
+        if (error.response.status === 401) {
+          store
+            .dispatch(AUTH_ACTIONS.LOG_OUT)
+            .then(() => router.push("/login"));
+        }
+        return Promise.reject(error);
+      }
+    );
   },
 };
 export default ApiService;
