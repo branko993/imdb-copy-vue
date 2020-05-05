@@ -9,7 +9,10 @@
           <b-card-body :title="currentMovie.title">
             <b-card-text>{{currentMovie.description}}</b-card-text>
             <div class="form-inline">
-              <span @click="likeMovie(currentMovie.id)" style="cursor:pointer">
+              <span
+                @click="likeMovie(currentMovie.id)"
+                :style="isAuthenticated? 'cursor:pointer' : 'pointer-events:none'"
+              >
                 <font-awesome-icon
                   :icon="currentMovie.liked_by_user ? ['fa','thumbs-up'] : ['far','thumbs-up']"
                 />
@@ -17,7 +20,10 @@
               <strong style="margin-left:3px;">{{currentMovie.total_likes}}</strong>
             </div>
             <div class="form-inline">
-              <span @click="dislikeMovie(currentMovie.id)" style="cursor:pointer"> 
+              <span
+                @click="dislikeMovie(currentMovie.id)"
+                :style="isAuthenticated? 'cursor:pointer' : 'pointer-events:none'"
+              >
                 <font-awesome-icon
                   :icon="currentMovie.disliked_by_user ? ['fa','thumbs-down'] : ['far','thumbs-down']"
                 />
@@ -35,6 +41,8 @@
 import { MOVIES_ACTIONS } from "../store/actions/actions";
 import { MOVIES_GETTERS } from "../store/getters/getters";
 import { likeMovieMixin } from "../mixins/likeMovieMixin";
+import { mapGetters } from "vuex";
+import { AUTH_GETTERS } from "../store/getters/getters";
 
 export default {
   name: "Movie",
@@ -53,7 +61,10 @@ export default {
   computed: {
     currentMovie() {
       return this.$store.getters[MOVIES_GETTERS.getCurrentMovie];
-    }
+    },
+    ...mapGetters({
+      isAuthenticated: AUTH_GETTERS.isAuthenticated
+    })
   }
 };
 </script>
