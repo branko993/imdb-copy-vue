@@ -5,7 +5,7 @@
         @click="likeMovie(movie.id)"
         :style="isAuthenticated? 'cursor:pointer' : 'pointer-events:none'"
       >
-        <font-awesome-icon :icon="movie.liked_by_user ? ['fa','thumbs-up'] : ['far','thumbs-up']" />
+        <font-awesome-icon :icon="movie.likes_count > 0 ? ['fa','thumbs-up'] : ['far','thumbs-up']" />
       </span>
       <strong style="margin-left:3px;">{{movie.total_likes}}</strong>
     </div>
@@ -15,7 +15,7 @@
         :style="isAuthenticated? 'cursor:pointer' : 'pointer-events:none'"
       >
         <font-awesome-icon
-          :icon="movie.disliked_by_user ? ['fa','thumbs-down'] : ['far','thumbs-down']"
+          :icon="movie.dislikes_count > 0 ? ['fa','thumbs-down'] : ['far','thumbs-down']"
         />
       </span>
       <strong style="margin-left:3px;">{{movie.total_dislikes}}</strong>
@@ -24,7 +24,6 @@
 </template>
 
 <script>
-
 import { mapGetters } from "vuex";
 import { AUTH_GETTERS } from "../store/getters/getters";
 import { MOVIES_ACTIONS } from "../store/actions/actions";
@@ -32,9 +31,9 @@ import { MOVIES_ACTIONS } from "../store/actions/actions";
 export default {
   name: "HelloWorld",
   props: {
-      movie:  {
-          Type: Object
-      }
+    movie: {
+      Type: Object
+    }
   },
   methods: {
     likeMovie(id) {
