@@ -1,19 +1,21 @@
 <template>
   <div class="container" style="margin-top:15px">
     <div class="row" v-for="movie in movies" :key="movie.id">
-      <b-card
-        no-body
-        class="overflow-hidden offset-md-1"
-        style="max-width: 800px; margin-top:3px;cursor:pointer;"
-        @click="redirectToMovie(movie.id)"
-      >
+      <b-card no-body class="overflow-hidden offset-md-1" style="max-width: 800px; margin-top:3px;">
         <b-row no-gutters>
           <b-col md="4">
-            <b-card-img :src="movie.image_url" alt="Image" class="rounded-0"></b-card-img>
+            <b-card-img
+              :src="movie.image_url"
+              alt="Image"
+              class="rounded-0"
+              style="cursor:pointer"
+              @click="redirectToMovie(movie.id)"
+            ></b-card-img>
           </b-col>
           <b-col md="8">
             <b-card-body :title="movie.title">
-              <b-card-text>{{movie.description | truncate(300)}}</b-card-text>
+              <b-card-text>{{movie.description | truncate(200)}}</b-card-text>
+              <MovieReaction v-on:loadData="loadData" :movie="movie" />
             </b-card-body>
           </b-col>
         </b-row>
@@ -37,9 +39,13 @@ import { MOVIES_ACTIONS } from "../store/actions/actions";
 import { MOVIES_GETTERS } from "../store/getters/getters";
 import { mapFields } from "vuex-map-fields";
 import { mapGetters } from "vuex";
+import MovieReaction from "../components/MovieReaction";
 
 export default {
   name: "Movies",
+  components: {
+    MovieReaction
+  },
   methods: {
     loadData() {
       this.$store.dispatch(MOVIES_ACTIONS.FETCH_CURRENT_PAGE, this.currentPage);
@@ -59,7 +65,7 @@ export default {
     ...mapGetters({
       movies: MOVIES_GETTERS.getMovies,
       perPage: MOVIES_GETTERS.getPerPage,
-      totalRows: MOVIES_GETTERS.getTotalRows
+      totalRows: MOVIES_GETTERS.getTotalRows,
     })
   }
 };

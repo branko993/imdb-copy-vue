@@ -51,6 +51,12 @@ const movies = {
     [MOVIES_ACTIONS.CREATE_NEW_MOVIE]: (context, movie) => {
       return MoviesService.createNewMovie(movie);
     },
+    [MOVIES_ACTIONS.LIKE_MOVIE]: (context, movieId) => {
+      return MoviesService.likeMovie(movieId);
+    },
+    [MOVIES_ACTIONS.DISLIKE_MOVIE]: (context, movieId) => {
+      return MoviesService.dislikeMovie(movieId);
+    },
   },
 };
 export default movies;

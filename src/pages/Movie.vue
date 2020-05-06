@@ -8,6 +8,7 @@
         <b-col md="8">
           <b-card-body :title="currentMovie.title">
             <b-card-text>{{currentMovie.description}}</b-card-text>
+            <MovieReaction v-on:loadData="loadData" :movie="currentMovie" />
           </b-card-body>
         </b-col>
       </b-row>
@@ -18,9 +19,13 @@
 <script>
 import { MOVIES_ACTIONS } from "../store/actions/actions";
 import { MOVIES_GETTERS } from "../store/getters/getters";
+import MovieReaction from "../components/MovieReaction";
 
 export default {
   name: "Movie",
+  components: {
+    MovieReaction
+  },
   methods: {
     loadData() {
       this.$store.dispatch(
@@ -35,7 +40,7 @@ export default {
   computed: {
     currentMovie() {
       return this.$store.getters[MOVIES_GETTERS.getCurrentMovie];
-    }
+    },
   }
 };
 </script>
