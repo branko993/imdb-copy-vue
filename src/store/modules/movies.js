@@ -35,9 +35,6 @@ const movies = {
     [MOVIES_MUTATIONS.SET_FILTER_GENRE]: (state, genreId) => {
       state.filters.genreId = genreId;
     },
-    [MOVIES_MUTATIONS.SET_CURRENT_PAGE]: (state, currentPage) => {
-      state.currentPage = currentPage;
-    },
     updateField,
   },
   getters: {
