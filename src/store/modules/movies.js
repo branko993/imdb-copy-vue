@@ -15,6 +15,10 @@ const movies = {
     currentPage: 1,
     totalRows: 1,
     perPage: 1,
+    filters: {
+      title: "",
+      genreId: "",
+    },
   },
   mutations: {
     [MOVIES_MUTATIONS.SET_MOVIES_LIST]: (state, response) => {
@@ -25,6 +29,15 @@ const movies = {
     [MOVIES_MUTATIONS.SET_CURRENT_MOVIE]: (state, currentMovie) => {
       state.currentMovie = currentMovie;
     },
+    [MOVIES_MUTATIONS.SET_FILTER_TITLE]: (state, title) => {
+      state.filters.title = title;
+    },
+    [MOVIES_MUTATIONS.SET_FILTER_GENRE]: (state, genreId) => {
+      state.filters.genreId = genreId;
+    },
+    [MOVIES_MUTATIONS.SET_CURRENT_PAGE]: (state, currentPage) => {
+      state.currentPage = currentPage;
+    },
     updateField,
   },
   getters: {
@@ -33,11 +46,15 @@ const movies = {
     [MOVIES_GETTERS.getCurrentPage]: (state) => state.currentPage,
     [MOVIES_GETTERS.getPerPage]: (state) => state.perPage,
     [MOVIES_GETTERS.getTotalRows]: (state) => state.totalRows,
+    [MOVIES_GETTERS.getFilters]: (state) => state.filters,
     getField,
   },
   actions: {
-    [MOVIES_ACTIONS.FETCH_CURRENT_PAGE]: (context, currentPage) => {
-      return MoviesService.getCurrentPage(currentPage).then((resp) => {
+    [MOVIES_ACTIONS.FETCH_CURRENT_PAGE]: (context, {currentPage, filters}) => {
+      return MoviesService.getCurrentPage(
+        currentPage,
+        filters
+      ).then((resp) => {
         context.commit(MOVIES_MUTATIONS.SET_MOVIES_LIST, resp.data);
         return resp;
       });
@@ -56,6 +73,12 @@ const movies = {
     },
     [MOVIES_ACTIONS.DISLIKE_MOVIE]: (context, movieId) => {
       return MoviesService.dislikeMovie(movieId);
+    },
+    [MOVIES_ACTIONS.CHANGE_FILTER_TITLE]: (context, title) => {
+      context.commit(MOVIES_MUTATIONS.SET_FILTER_TITLE, title);
+    },
+    [MOVIES_ACTIONS.CHANGE_FILTER_GENRE]: (context, genreId) => {
+      context.commit(MOVIES_MUTATIONS.SET_FILTER_GENRE, genreId);
     },
   },
 };
