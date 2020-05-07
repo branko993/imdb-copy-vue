@@ -15,10 +15,16 @@ const MoviesService = {
     return ApiService.get(moviesUrl.getAll);
   },
 
-  getCurrentPage(page) {
+  getCurrentPage(page, filter) {
     let currentUrl = moviesUrl.currentUrl
       .replace("%page", page)
       .replace("%size", PER_PAGE);
+
+    Object.keys(filter).map((key) => {
+      if (filter[key] !== "") {
+        currentUrl += `&${key}=${filter[key]}`;
+      }
+    });
     return ApiService.get(currentUrl);
   },
 

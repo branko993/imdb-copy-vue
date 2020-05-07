@@ -10,11 +10,16 @@ import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import "./assets/css/global.css";
 import ApiService from "./services/api.service";
+import vueDebounce from "vue-debounce";
 import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
+
+Vue.use(vueDebounce, {
+  listenTo: "input",
+});
 
 library.add(fas);
 library.add(far);
