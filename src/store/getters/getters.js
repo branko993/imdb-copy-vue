@@ -13,3 +13,6 @@ export const MOVIES_GETTERS = {
 export const GENRE_GETTERS = {
   getGenreList: "getGenreList",
 };
+export const MOVIE_COMMENTS_GETTERS = {
+  getCurrentComments: "getCurrentComments",
+};

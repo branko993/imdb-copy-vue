@@ -5,9 +5,15 @@
         @click="likeMovie(movie.id)"
         :style="isAuthenticated? 'cursor:pointer' : 'pointer-events:none'"
       >
-        <font-awesome-icon :icon="movie.likes_count > 0 ? ['fa','thumbs-up'] : ['far','thumbs-up']" />
+        <font-awesome-icon
+          :icon="movie.likes_count > 0 ? ['fa','thumbs-up'] : ['far','thumbs-up']"
+        />
       </span>
       <strong style="margin-left:3px;">{{movie.total_likes}}</strong>
+      <div class="form-inline" style="right:30px; position:absolute">
+        <font-awesome-icon :icon="['fa','eye']" />
+        <strong style="margin-left:3px;">{{movie.views}}</strong>
+      </div>
     </div>
     <div class="form-inline">
       <span
