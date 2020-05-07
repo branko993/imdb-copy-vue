@@ -4,8 +4,7 @@ import { PER_PAGE } from "../shared/const";
 const moviesUrl = {
   getAll: "movies/all",
   getCurrent: "movies/movie/",
-  currentUrl:
-    "movies/getPage?page=%page&size=%size&title=%title&genreId=%genreId",
+  currentUrl: "movies/getPage?page=%page&size=%size",
   createMovieurl: "/movies/create",
   likeMovieUrl: "movies/%movie/like",
   dislikeMovieUrl: "movies/%movie/dislike",
@@ -19,9 +18,13 @@ const MoviesService = {
   getCurrentPage(page, filter) {
     let currentUrl = moviesUrl.currentUrl
       .replace("%page", page)
-      .replace("%size", PER_PAGE)
-      .replace("%title", filter.title)
-      .replace("%genreId", filter.genreId);
+      .replace("%size", PER_PAGE);
+
+    Object.keys(filter).map((key) => {
+      if (filter[key] !== "") {
+        currentUrl += `&${key}=${filter[key]}`;
+      }
+    });
     return ApiService.get(currentUrl);
   },
 
