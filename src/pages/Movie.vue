@@ -13,6 +13,7 @@
         </b-col>
       </b-row>
     </b-card>
+    <MovieComments />
   </div>
 </template>
 
@@ -20,11 +21,14 @@
 import { MOVIES_ACTIONS } from "../store/actions/actions";
 import { MOVIES_GETTERS } from "../store/getters/getters";
 import MovieReaction from "../components/MovieReaction";
+import MovieComments from "./MovieComments";
+import { mapGetters } from "vuex";
 
 export default {
   name: "Movie",
   components: {
-    MovieReaction
+    MovieReaction,
+    MovieComments
   },
   methods: {
     loadData() {
@@ -38,9 +42,9 @@ export default {
     this.loadData();
   },
   computed: {
-    currentMovie() {
-      return this.$store.getters[MOVIES_GETTERS.getCurrentMovie];
-    },
+    ...mapGetters({
+      currentMovie: MOVIES_GETTERS.getCurrentMovie
+    })
   }
 };
 </script>

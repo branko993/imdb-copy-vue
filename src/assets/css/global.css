@@ -24,3 +24,18 @@ body {
 .fa-thumbs-down{
   color: red;
 }
+.fa-eye{
+  color: #1ca7bd;
+}
+.cmnt-container {
+  font-family: Lato;
+  margin-top: 5px;
+}
+
+.cmnt-textarea {
+  resize: none;
+  padding: 20px;
+  height: 70px;
+  width: 100%;
+  border: 1px solid #F2F2F2;
+}
