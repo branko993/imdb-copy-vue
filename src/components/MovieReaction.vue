@@ -10,26 +10,7 @@
         />
       </span>
       <strong style="margin-left:3px;">{{movie.total_likes}}</strong>
-      <div
-        class="form-inline"
-        v-if="movie.watch_list[0]"
-        style="right:30px; position:absolute"
-      >
-        <h6 v-show="movie.watch_list[0].watched === 1">You watched this movie!</h6>
-        <h6 v-show="movie.watch_list[0].watched === 0">You did't watch this movie!</h6>
-      </div>
-      <div
-        v-if="!movie.watch_list[0]"
-        class="form-inline"
-        style="right:0; position:absolute"
-      >
-        <input
-          class="btn btn-info btn-sm"
-          @click="addToWachList(movie.id)"
-          type="button"
-          value="Add to watch list"
-        />
-      </div>
+      <WatchListReactions v-if="isAuthenticated" :watchList="movie.watch_list" :movieId="movie.id"/>
     </div>
     <div class="form-inline">
       <span
@@ -52,10 +33,12 @@
 <script>
 import { mapGetters } from "vuex";
 import { AUTH_GETTERS } from "../store/getters/getters";
-import { MOVIES_ACTIONS, WATCH_LIST_ACTIONS } from "../store/actions/actions";
+import { MOVIES_ACTIONS } from "../store/actions/actions";
+import WatchListReactions from "./WatchListReactions"
 
 export default {
   name: "HelloWorld",
+  components: {WatchListReactions},
   props: {
     movie: {
       Type: Object
@@ -72,13 +55,6 @@ export default {
         this.$emit("loadData");
       });
     },
-    addToWachList(movieId) {
-      this.$store
-        .dispatch(WATCH_LIST_ACTIONS.ADD_TO_WATCH_LIST, movieId)
-        .then(() => {
-          this.$emit("loadData");
-        });
-    }
   },
   computed: {
     ...mapGetters({
