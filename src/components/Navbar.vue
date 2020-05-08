@@ -26,6 +26,7 @@
             <img class="img-fluid p-0" src="../assets/images/profile-avatar.png" style="width:85%" />
           </template>
           <b-dropdown-item>Profile</b-dropdown-item>
+          <b-dropdown-item v-on:click.stop.prevent="goTo('/watchList')">Watch List</b-dropdown-item>
           <b-dropdown-divider></b-dropdown-divider>
           <b-dropdown-item v-on:click.stop.prevent="logOut">Logout</b-dropdown-item>
         </b-dropdown>
@@ -50,6 +51,9 @@ export default {
       this.$store
         .dispatch(AUTH_ACTIONS.LOG_OUT)
         .then(() => this.$router.push("/login"));
+    },
+    goTo(link) {
+      this.$router.push(link);
     },
     applySearch() {
       this.$store.dispatch(MOVIES_ACTIONS.CHANGE_FILTER_TITLE, this.title);

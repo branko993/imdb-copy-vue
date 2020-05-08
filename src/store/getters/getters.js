@@ -19,3 +19,6 @@ export const MOVIE_COMMENTS_GETTERS = {
   getCommentsCurrentPageNum: "getCommentsCurrentPageNum",
   getCommentsTotalRows: "getCommentsTotalRows",
 };
+export const WATCH_LIST_GETTERS = {
+  getWatchList: "getWatchList",
+};
