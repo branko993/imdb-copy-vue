@@ -3,7 +3,7 @@ import { PER_PAGE_COMMENTS } from "../shared/const";
 
 const commentsUrl = {
   getCurrentComments: "movies/$id/comments?page=%page&size=%size",
-  createComment: "movies/$id/createComment",
+  createComment: "movies/$id/comments",
 };
 
 const movieCommentsService = {
