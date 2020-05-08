@@ -31,18 +31,7 @@
         </div>
       </div>
     </div>
-    <div class="row" v-for="comment in comments" :key="comment.id">
-      <div class="col-md-6 offset-md-3">
-        <div class="card card-info">
-          <div class="card-block">
-            <h6
-              class="cmnt-textarea text-secondary"
-            >Commented by {{comment.user.name}} at {{$moment(comment.user.created_at).format("LLLL")}}</h6>
-            <h6 style="padding: 20px;">{{comment.description}}</h6>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Comment v-for="comment in comments" :comment="comment" :key="comment.id" />
     <div class="container">
       <b-pagination
         class="offset-md-3"
@@ -61,6 +50,7 @@ import { MOVIE_COMMENTS_ACTIONS } from "../store/actions/actions";
 import { AUTH_GETTERS, MOVIE_COMMENTS_GETTERS } from "../store/getters/getters";
 import { mapGetters } from "vuex";
 import { formMixin } from "../mixins/formMixin";
+import Comment from "../components/Comment";
 
 export default {
   name: "MovieComments",
@@ -71,7 +61,9 @@ export default {
     };
   },
   mixins: [formMixin],
-
+  components: {
+    Comment
+  },
   methods: {
     loadData() {
       this.$store.dispatch(MOVIE_COMMENTS_ACTIONS.FETCH_MOVIE_COMMENTS_LIST, {
