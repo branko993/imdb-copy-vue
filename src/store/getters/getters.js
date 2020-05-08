@@ -15,4 +15,7 @@ export const GENRE_GETTERS = {
 };
 export const MOVIE_COMMENTS_GETTERS = {
   getCurrentComments: "getCurrentComments",
+  getCommentsPerPage: "getCommentsPerPage",
+  getCommentsCurrentPageNum: "getCommentsCurrentPageNum",
+  getCommentsTotalRows: "getCommentsTotalRows",
 };
