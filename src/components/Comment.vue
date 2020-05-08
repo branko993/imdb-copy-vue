@@ -21,8 +21,8 @@ export default {
   },
   computed: {
     commentHeader() {
-      return `Commented by ${this.$props.comment.user.name} at ${this.$moment(
-        this.$props.comment.user.created_at
+      return `Commented by ${this.comment.user.name} at ${this.$moment(
+        this.comment.user.created_at
       ).format("LLLL")}`;
     }
   }
