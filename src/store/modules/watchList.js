@@ -19,11 +19,10 @@ const watchlist = {
       });
     },
     [WATCH_LIST_MUTATIONS.REMOVE_ITEM_WATCH_LIST]: (state, item) => {
-      state.watchlist.forEach((element, index) => {
-        if (element.id === item.id) {
-          state.watchlist.splice(index, 1);
-        }
-      });
+      let index = state.watchlist.findIndex(
+        (element) => element.id === item.id
+      );
+      state.watchlist.splice(index, 1);
     },
   },
   getters: {

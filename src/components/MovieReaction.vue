@@ -11,7 +11,7 @@
       </span>
       <strong style="margin-left:3px;">{{movie.total_likes}}</strong>
       <WatchListReactions
-        v-if="isAuthenticated && movie.watch_list"
+        v-if="isAuthenticated"
         :watchList="movie.watch_list"
         :movieId="movie.id"
       />

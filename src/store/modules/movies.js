@@ -38,7 +38,7 @@ const movies = {
     [MOVIES_MUTATIONS.ADD_ITEM_TO_WATCH_LIST]: (state, data) => {
       state.moviesList.forEach((element) => {
         if (element.id === data.movieId) {
-          element.watch_list.push(data.item);
+          element.watch_list = data.item;
         }
       });
     },
