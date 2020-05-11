@@ -48,7 +48,7 @@ export default {
         {
           key: "watched",
           formatter: value => {
-            return value == 0 ? false : true;
+            return value !== 0;
           }
         },
         { key: "created_at", formatter: "formatDate", sortable: true },
@@ -65,21 +65,14 @@ export default {
       return this.$moment(date).format("LLLL");
     },
     markAsWatched(id) {
-      this.$store.dispatch(WATCH_LIST_ACTIONS.MARK_AS_WATCHED, id).then(() => {
-        this.loadData();
-      });
+      this.$store.dispatch(WATCH_LIST_ACTIONS.MARK_AS_WATCHED, id);
     },
     unmarkAsWatched(id) {
       this.$store
-        .dispatch(WATCH_LIST_ACTIONS.UNMARK_AS_WATCHED, id)
-        .then(() => {
-          this.loadData();
-        });
+        .dispatch(WATCH_LIST_ACTIONS.UNMARK_AS_WATCHED, id);
     },
     remove(id) {
-      this.$store.dispatch(WATCH_LIST_ACTIONS.REMOVE, id).then(() => {
-        this.loadData();
-      });
+      this.$store.dispatch(WATCH_LIST_ACTIONS.REMOVE, id);
     }
   },
   beforeMount() {

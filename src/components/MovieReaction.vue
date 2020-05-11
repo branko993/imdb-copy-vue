@@ -10,7 +10,11 @@
         />
       </span>
       <strong style="margin-left:3px;">{{movie.total_likes}}</strong>
-      <WatchListReactions v-if="isAuthenticated" :watchList="movie.watch_list" :movieId="movie.id"/>
+      <WatchListReactions
+        v-if="isAuthenticated && movie.watch_list"
+        :watchList="movie.watch_list"
+        :movieId="movie.id"
+      />
     </div>
     <div class="form-inline">
       <span
@@ -34,11 +38,11 @@
 import { mapGetters } from "vuex";
 import { AUTH_GETTERS } from "../store/getters/getters";
 import { MOVIES_ACTIONS } from "../store/actions/actions";
-import WatchListReactions from "./WatchListReactions"
+import WatchListReactions from "./WatchListReactions";
 
 export default {
   name: "HelloWorld",
-  components: {WatchListReactions},
+  components: { WatchListReactions },
   props: {
     movie: {
       Type: Object
@@ -54,7 +58,7 @@ export default {
       this.$store.dispatch(MOVIES_ACTIONS.DISLIKE_MOVIE, id).then(() => {
         this.$emit("loadData");
       });
-    },
+    }
   },
   computed: {
     ...mapGetters({

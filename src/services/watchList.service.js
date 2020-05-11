@@ -1,10 +1,10 @@
 import ApiService from "./api.service";
 
 const watchListUrl = {
-  getList: "user/watchList/get",
+  getList: "user/watchList",
   markAsWatched: "user/watchList/$id/mark",
   unmarkAsWatched: "user/watchList/$id/unmark",
-  addToWatchlist: "user/watchList/create",
+  addToWatchlist: "user/watchList",
   remove: "user/watchList/$id/remove",
 };
 
