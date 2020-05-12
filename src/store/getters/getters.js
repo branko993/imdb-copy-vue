@@ -25,3 +25,6 @@ export const WATCH_LIST_GETTERS = {
 export const POPULAR_MOVIES_GETTERS = {
   getPopularMovies: "getPopularMovies",
 };
+export const RELATED_MOVIES_GETTERS = {
+  getRelatedMovies: "getRelatedMovies",
+};
