@@ -6,8 +6,9 @@
       </div>
       <div v-show="isAuthenticated" class="form-inline">
         <router-link to="/movies/create" class="nav-link" style="color:white">Create Movie</router-link>
+        <router-link to="/movies/create/omdb" class="nav-link" style="color:white">Create Movie OMDb</router-link>
       </div>
-      <div class="form-inline offset-md-6">
+      <div :class="isAuthenticated ? 'form-inline offset-md-3' : 'form-inline offset-md-6'">
         <b-form-input
           size="sm"
           v-model="title"

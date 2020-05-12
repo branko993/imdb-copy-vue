@@ -84,6 +84,19 @@ const movies = {
     [MOVIES_ACTIONS.CHANGE_FILTER_GENRE]: (context, genreId) => {
       context.commit(MOVIES_MUTATIONS.SET_FILTER_GENRE, genreId);
     },
+    [MOVIES_ACTIONS.CREATE_MOVIE_FROM_OMDB]: (context, title) => {
+      return MoviesService.getMovieFromOmdb(title).then((resp) => {
+        let movie = {
+          title: null,
+          description: null,
+          image_url: null,
+        };
+        movie.title = resp.data.Title;
+        movie.description = resp.data.Plot;
+        movie.image_url = resp.data.Poster;
+        return MoviesService.createNewMovie(movie);
+      });
+    },
   },
 };
 export default movies;

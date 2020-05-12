@@ -5,6 +5,7 @@ import Movies from "./pages/Movies";
 import WatchList from "./pages/WatchList";
 import Movie from "./pages/Movie";
 import CreateMovie from "./pages/CreateMovie";
+import CreateMovieOmdb from "./pages/CreateMovieOmdb";
 import PageNotFound from "./pages/PageNotFound";
 import store from "./store/store";
 import { AUTH_GETTERS } from "./store/getters/getters";
@@ -40,6 +41,11 @@ export default {
         {
           path: "/movies/create",
           component: CreateMovie,
+          beforeEnter: ifAuthenticated,
+        },
+        {
+          path: "/movies/create/omdb",
+          component: CreateMovieOmdb,
           beforeEnter: ifAuthenticated,
         },
         {
