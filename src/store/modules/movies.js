@@ -35,6 +35,13 @@ const movies = {
     [MOVIES_MUTATIONS.SET_FILTER_GENRE]: (state, genreId) => {
       state.filters.genreId = genreId;
     },
+    [MOVIES_MUTATIONS.ADD_ITEM_TO_WATCH_LIST]: (state, data) => {
+      state.moviesList.forEach((element) => {
+        if (element.id === data.movieId) {
+          element.watch_list = data.item;
+        }
+      });
+    },
     updateField,
   },
   getters: {
@@ -47,11 +54,11 @@ const movies = {
     getField,
   },
   actions: {
-    [MOVIES_ACTIONS.FETCH_CURRENT_PAGE]: (context, {currentPage, filters}) => {
-      return MoviesService.getCurrentPage(
-        currentPage,
-        filters
-      ).then((resp) => {
+    [MOVIES_ACTIONS.FETCH_CURRENT_PAGE]: (
+      context,
+      { currentPage, filters }
+    ) => {
+      return MoviesService.getCurrentPage(currentPage, filters).then((resp) => {
         context.commit(MOVIES_MUTATIONS.SET_MOVIES_LIST, resp.data);
         return resp;
       });

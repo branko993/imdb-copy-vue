@@ -10,10 +10,11 @@
         />
       </span>
       <strong style="margin-left:3px;">{{movie.total_likes}}</strong>
-      <div class="form-inline" style="right:30px; position:absolute">
-        <font-awesome-icon :icon="['fa','eye']" />
-        <strong style="margin-left:3px;">{{movie.views}}</strong>
-      </div>
+      <WatchListReactions
+        v-if="isAuthenticated"
+        :watchList="movie.watch_list"
+        :movieId="movie.id"
+      />
     </div>
     <div class="form-inline">
       <span
@@ -25,6 +26,10 @@
         />
       </span>
       <strong style="margin-left:3px;">{{movie.total_dislikes}}</strong>
+      <div class="form-inline" style="right:30px; position:absolute">
+        <font-awesome-icon :icon="['fa','eye']" />
+        <strong style="margin-left:3px;">{{movie.views}}</strong>
+      </div>
     </div>
   </div>
 </template>
@@ -33,9 +38,11 @@
 import { mapGetters } from "vuex";
 import { AUTH_GETTERS } from "../store/getters/getters";
 import { MOVIES_ACTIONS } from "../store/actions/actions";
+import WatchListReactions from "./WatchListReactions";
 
 export default {
   name: "HelloWorld",
+  components: { WatchListReactions },
   props: {
     movie: {
       Type: Object

@@ -2,6 +2,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import MovieLayout from "./layout/MovieLayout";
 import Movies from "./pages/Movies";
+import WatchList from "./pages/WatchList";
 import Movie from "./pages/Movie";
 import CreateMovie from "./pages/CreateMovie";
 import PageNotFound from "./pages/PageNotFound";
@@ -39,6 +40,11 @@ export default {
         {
           path: "/movies/create",
           component: CreateMovie,
+          beforeEnter: ifAuthenticated,
+        },
+        {
+          path: "/watchList",
+          component: WatchList,
           beforeEnter: ifAuthenticated,
         },
         {
