@@ -1,5 +1,6 @@
 <template>
   <div class="container" style="margin-top:15px">
+    <PopularMovies />
     <b-card
       no-body
       bg-variant="light"
@@ -73,6 +74,7 @@ import { MOVIES_GETTERS, GENRE_GETTERS } from "../store/getters/getters";
 import { mapFields } from "vuex-map-fields";
 import { mapGetters } from "vuex";
 import MovieReaction from "../components/MovieReaction";
+import PopularMovies from "../components/PopularMovies";
 
 export default {
   name: "Movies",
@@ -82,7 +84,8 @@ export default {
     };
   },
   components: {
-    MovieReaction
+    MovieReaction,
+    PopularMovies
   },
   methods: {
     loadData() {

@@ -8,6 +8,7 @@ const moviesUrl = {
   createMovieurl: "/movies/create",
   likeMovieUrl: "movies/%movie/like",
   dislikeMovieUrl: "movies/%movie/dislike",
+  popularMovies: "movies/popular"
 };
 
 const MoviesService = {
@@ -45,6 +46,11 @@ const MoviesService = {
     let dislikeMovieUrl = moviesUrl.dislikeMovieUrl.replace("%movie", id);
     return ApiService.post(dislikeMovieUrl);
   },
+
+  getPopularMovies() {
+    return ApiService.get(moviesUrl.popularMovies);
+
+  }
 };
 
 export default MoviesService;

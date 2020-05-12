@@ -22,3 +22,6 @@ export const MOVIE_COMMENTS_GETTERS = {
 export const WATCH_LIST_GETTERS = {
   getWatchList: "getWatchList",
 };
+export const POPULAR_MOVIES_GETTERS = {
+  getPopularMovies: "getPopularMovies",
+};
