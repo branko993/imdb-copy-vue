@@ -95,7 +95,6 @@ const movies = {
         };
         GenreService.getGenreByName(resp.data.Genre.split(",")[0])
           .then((resp) => {
-            console.log(resp.data)
             movie.genre_id = resp.data.id;
           })
           .then(() => {
