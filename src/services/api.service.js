@@ -46,6 +46,14 @@ const ApiService = {
         return Promise.reject(error);
       }
     );
+    axios.interceptors.request.use(
+      function(config) {
+        if (config.url.includes("http://www.omdbapi.com")) {
+          delete config.headers.common["Authorization"];
+        }
+        return config;
+      }
+    );
   },
 };
 export default ApiService;

@@ -10,6 +10,7 @@ const moviesUrl = {
   dislikeMovieUrl: "movies/%movie/dislike",
   popularMovies: "movies/popular",
   relatedMovies: "movies/%id/related",
+  getMovieFromOmdb: "http://www.omdbapi.com/?apikey=9ac4d574",
 };
 
 const MoviesService = {
@@ -51,7 +52,11 @@ const MoviesService = {
   getPopularMovies() {
     return ApiService.get(moviesUrl.popularMovies);
   },
-
+  
+  getMovieFromOmdb(title) {
+    let url = `${moviesUrl.getMovieFromOmdb}&t=${title}`;
+    return ApiService.get(url);
+  },
   getRelatedMovies(id) {
     let url = moviesUrl.relatedMovies.replace("%id", id);
     return ApiService.get(url);

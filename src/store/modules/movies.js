@@ -3,6 +3,7 @@ import { MOVIES_GETTERS } from "../getters/getters";
 import { MOVIES_MUTATIONS } from "../mutations/mutations";
 import { getField, updateField } from "vuex-map-fields";
 import MoviesService from "../../services/movies.service";
+import GenreService from "../../services/genre.service";
 
 const movies = {
   state: {
@@ -83,6 +84,26 @@ const movies = {
     },
     [MOVIES_ACTIONS.CHANGE_FILTER_GENRE]: (context, genreId) => {
       context.commit(MOVIES_MUTATIONS.SET_FILTER_GENRE, genreId);
+    },
+    [MOVIES_ACTIONS.CREATE_MOVIE_FROM_OMDB]: (context, title) => {
+      return MoviesService.getMovieFromOmdb(title).then((resp) => {
+        let movie = {
+          title: null,
+          description: null,
+          image_url: null,
+          genre_id: null,
+        };
+        GenreService.getGenreByName(resp.data.Genre.split(",")[0])
+          .then((resp) => {
+            movie.genre_id = resp.data.id;
+          })
+          .then(() => {
+            movie.title = resp.data.Title;
+            movie.description = resp.data.Plot;
+            movie.image_url = resp.data.Poster;
+            return MoviesService.createNewMovie(movie);
+          });
+      });
     },
   },
 };
