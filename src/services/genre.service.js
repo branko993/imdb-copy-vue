@@ -2,7 +2,7 @@ import ApiService from "./api.service";
 
 const genreUrl = {
   getAll: "genre/all",
-  genreByName: "genre/show?name=%name"
+  genreByName: "genre/search?name=%name"
 };
 
 const GenreService = {
