@@ -3,6 +3,7 @@ import { MOVIES_GETTERS } from "../getters/getters";
 import { MOVIES_MUTATIONS } from "../mutations/mutations";
 import { getField, updateField } from "vuex-map-fields";
 import MoviesService from "../../services/movies.service";
+import GenreService from "../../services/genre.service";
 
 const movies = {
   state: {
@@ -90,11 +91,19 @@ const movies = {
           title: null,
           description: null,
           image_url: null,
+          genre_id: null,
         };
-        movie.title = resp.data.Title;
-        movie.description = resp.data.Plot;
-        movie.image_url = resp.data.Poster;
-        return MoviesService.createNewMovie(movie);
+        GenreService.getGenreByName(resp.data.Genre.split(",")[0])
+          .then((resp) => {
+            console.log(resp.data)
+            movie.genre_id = resp.data.id;
+          })
+          .then(() => {
+            movie.title = resp.data.Title;
+            movie.description = resp.data.Plot;
+            movie.image_url = resp.data.Poster;
+            return MoviesService.createNewMovie(movie);
+          });
       });
     },
   },

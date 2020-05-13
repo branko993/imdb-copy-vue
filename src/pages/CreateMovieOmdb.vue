@@ -54,12 +54,11 @@ export default {
       this.$store
         .dispatch(MOVIES_ACTIONS.CREATE_MOVIE_FROM_OMDB, this.title)
         .then(() => {
-          alert("ajdee");
           this.hasErrors = false;
           this.message = "Movie created successfully";
         })
         .catch(err => {
-          let errorMessage = "Error: " + err.Error;
+          let errorMessage = "Error: " + err.response.data.message;
           this.hasErrors = true;
           this.message = errorMessage;
         });
