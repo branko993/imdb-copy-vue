@@ -1,5 +1,6 @@
 <template>
   <div class="container" style="margin-top:15px">
+    <RelatedMovies :key="$route.path" />
     <b-card no-body class="overflow-hidden offset-md-1">
       <b-row no-gutters>
         <b-col md="4">
@@ -22,13 +23,15 @@ import { MOVIES_ACTIONS } from "../store/actions/actions";
 import { MOVIES_GETTERS } from "../store/getters/getters";
 import MovieReaction from "../components/MovieReaction";
 import MovieComments from "./MovieComments";
+import RelatedMovies from "../components/RelatedMovies";
 import { mapGetters } from "vuex";
 
 export default {
   name: "Movie",
   components: {
     MovieReaction,
-    MovieComments
+    MovieComments,
+    RelatedMovies
   },
   methods: {
     loadData() {
@@ -39,6 +42,10 @@ export default {
     }
   },
   beforeMount() {
+    this.loadData();
+  },
+  beforeRouteUpdate(to, from, next) {
+    next();
     this.loadData();
   },
   computed: {

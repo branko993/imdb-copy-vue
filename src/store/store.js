@@ -6,6 +6,7 @@ import genre from "./modules/genre";
 import movieComments from "./modules/movieComments";
 import watchList from "./modules/watchList";
 import popularMovies from "./modules/popularMovies";
+import relatedMovies from "./modules/relatedMovies";
 
 Vue.use(Vuex);
 
@@ -16,7 +17,8 @@ const store = new Vuex.Store({
     genre,
     movieComments,
     watchList,
-    popularMovies
+    popularMovies,
+    relatedMovies
   },
 });
 
